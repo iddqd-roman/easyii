@@ -36,14 +36,14 @@ class Menu extends \yii\easyii\components\API
         }
         $this->options['items'] = $this->api_items($id_slug);
         if (!count($this->options['items'])) {
-            return LIVE_EDIT
+            return LIVE_EDIT_ENABLED
                 ? Html::a(Yii::t('easyii/menu/api', 'Create menu'), ['/admin/menu/a/create', 'slug' => $id_slug], ['target' => '_blank'])
                 : '';
         }
 
         $widget = \yii\widgets\Menu::widget($this->options);
 
-        return LIVE_EDIT
+        return LIVE_EDIT_ENABLED
             ? API::liveEdit($widget, Url::to(['/admin/menu']), 'div')
             : $widget;
     }

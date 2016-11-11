@@ -48,7 +48,7 @@ class AController extends Controller
             else{
                 if($model->save()){
                     $this->flash('success', Yii::t('easyii/menu', 'Menu created'));
-                    return $this->redirect(['/admin/'.$this->module->id]);
+                    return $this->redirect(['/admin/'.$this->module->id.'/a/edit', 'id' => $model->primaryKey]);
                 }
                 else{
                     $this->flash('error', Yii::t('easyii', 'Create error. {0}', $model->formatErrors()));
@@ -82,7 +82,7 @@ class AController extends Controller
                 else{
                     $this->flash('error', Yii::t('easyii', 'Update error. {0}', $model->formatErrors()));
                 }
-                return $this->refresh();
+                return $this->redirect(['/admin/'.$this->module->id]);
             }
         }
 
