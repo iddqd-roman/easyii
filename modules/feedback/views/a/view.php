@@ -16,8 +16,10 @@ if($model->status == Feedback::STATUS_ANSWERED) {
     <dt><?= Yii::t('easyii', 'Name') ?></dt>
     <dd><?= $model->name ?></dd>
 
+    <?php if($this->context->module->settings['enableEmail']) : ?>
     <dt>E-mail</dt>
     <dd><?= $model->email ?></dd>
+    <?php endif; ?>
 
     <?php if($this->context->module->settings['enablePhone']) : ?>
     <dt><?= Yii::t('easyii/feedback', 'Phone') ?></dt>
@@ -35,8 +37,10 @@ if($model->status == Feedback::STATUS_ANSWERED) {
     <dt><?= Yii::t('easyii', 'Date') ?></dt>
     <dd><?= Yii::$app->formatter->asDatetime($model->time, 'medium') ?></dd>
 
+    <?php if($this->context->module->settings['enableText']) : ?>
     <dt><?= Yii::t('easyii', 'Text') ?></dt>
     <dd><?= nl2br($model->text) ?></dd>
+    <?php endif; ?>
 </dl>
 
 <?php if($model->email) : ?>
