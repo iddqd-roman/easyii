@@ -52,6 +52,9 @@ $(function(){
                 type : $this.find('.field-type').val(),
                 options : $this.find('.field-options').val()
             };
+            if(data.name == '') {
+                data.name = data.title;
+            }
             if(data.name != '') {
                 form += '<input type="hidden" name="Field[' + i + ']" value=\'' + JSON.stringify(data) + '\'>';
             }
