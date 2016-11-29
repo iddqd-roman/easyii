@@ -16,7 +16,7 @@ class SeoText extends \yii\easyii\components\ActiveRecord
         return [
             [['h1', 'title', 'keywords', 'description'], 'trim'],
             [['h1', 'title', 'keywords', 'description'], 'string', 'max' => 255],
-            [['h1', 'title', 'keywords', 'description'], EscapeValidator::className()],
+            [[/*'h1', */'title', 'keywords', 'description'], EscapeValidator::className()],
         ];
     }
 
