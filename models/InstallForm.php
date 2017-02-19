@@ -14,6 +14,8 @@ class InstallForm extends Model
     public $recaptcha_secret = '';
     public $robot_email = '';
     public $admin_email = '';
+    public $telegram_chat_id = '';
+    public $telegram_bot_token = '';
 
     public function rules()
     {
@@ -22,6 +24,7 @@ class InstallForm extends Model
             ['root_password', 'string', 'min' => 6],
             [['recaptcha_key', 'recaptcha_secret'], 'string'],
             [['robot_email', 'admin_email'], 'email'],
+            [['telegram_chat_id', 'telegram_bot_token'], 'string'],
             [['root_password', 'recaptcha_key', 'recaptcha_secret', 'robot_email', 'admin_email'], 'trim'],
         ];
     }
@@ -31,7 +34,9 @@ class InstallForm extends Model
         return [
             'root_password' => Yii::t('easyii/install', 'Root password'),
             'admin_email' => Yii::t('easyii/install', 'Admin E-mail'),
-            'robot_email' => Yii::t('easyii/install', 'Robot E-mail')
+            'robot_email' => Yii::t('easyii/install', 'Robot E-mail'),
+            'telegram_chat_id' => Yii::t('easyii/install', 'Telegram chat ID'),
+            'telegram_bot_token' => Yii::t('easyii/install', 'Telegram bot token'),
         ];
     }
 

@@ -4,6 +4,7 @@ namespace yii\easyii\modules\feedback\models;
 use Yii;
 use yii\easyii\behaviors\CalculateNotice;
 use yii\easyii\helpers\Mail;
+use yii\easyii\helpers\Telegram;
 use yii\easyii\models\Setting;
 use yii\easyii\modules\feedback\FeedbackModule;
 use yii\easyii\validators\ReCaptchaValidator;
@@ -63,6 +64,7 @@ class Feedback extends \yii\easyii\components\ActiveRecord
 
         if($insert){
             $this->mailAdmin();
+            $this->telegramAdmin();
         }
     }
 
@@ -101,6 +103,19 @@ class Feedback extends \yii\easyii\components\ActiveRecord
             Setting::get('admin_email'),
             FeedbackModule::setting('subjectOnNewFeedback'),
             FeedbackModule::setting('templateOnNewFeedback'),
+            ['feedback' => $this, 'link' => Url::to(['/admin/feedback/a/view', 'id' => $this->primaryKey], true)]
+        );
+    }
+
+    public function telegramAdmin()
+    {
+        if(!FeedbackModule::setting('telegramAdminOnNewFeedback')){
+            return false;
+        }
+        return Telegram::send(
+            Setting::get('telegram_bot_token'),
+            Setting::get('telegram_chat_id'),
+            FeedbackModule::setting('telegramTemplateOnNewFeedback'),
             ['feedback' => $this, 'link' => Url::to(['/admin/feedback/a/view', 'id' => $this->primaryKey], true)]
         );
     }

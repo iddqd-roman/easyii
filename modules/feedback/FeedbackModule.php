@@ -13,6 +13,9 @@ class FeedbackModule extends \yii\easyii\components\Module
         'answerHeader' => 'Hello,',
         'answerFooter' => 'Best regards.',
 
+        'telegramAdminOnNewFeedback' => false,
+        'telegramTemplateOnNewFeedback' => '@easyii/modules/feedback/telegram/en/new_feedback',
+
         'enableTitle' => false,
         'enableEmail' => true,
         'enablePhone' => true,

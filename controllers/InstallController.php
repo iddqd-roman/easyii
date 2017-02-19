@@ -170,6 +170,20 @@ class InstallController extends \yii\web\Controller
         ])->execute();
 
         $db->createCommand()->insert(Setting::tableName(), [
+            'name' => 'telegram_chat_id',
+            'value' => $installForm->telegram_chat_id,
+            'title' => Yii::t('easyii/install', 'Telegram chat ID'),
+            'visibility' => Setting::VISIBLE_ALL
+        ])->execute();
+
+        $db->createCommand()->insert(Setting::tableName(), [
+            'name' => 'telegram_bot_token',
+            'value' => $installForm->telegram_bot_token,
+            'title' => Yii::t('easyii/install', 'Telegram bot token'),
+            'visibility' => Setting::VISIBLE_ROOT
+        ])->execute();
+
+        $db->createCommand()->insert(Setting::tableName(), [
             'name' => 'recaptcha_secret',
             'value' => $installForm->recaptcha_secret,
             'title' => Yii::t('easyii/install', 'ReCaptcha secret'),
