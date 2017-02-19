@@ -12,3 +12,9 @@ This repository is development package (yii2 extension).
 #### Contacts ####
 
 Feel free to email me on noumohope@gmail.com
+
+
+Миграции
+------------
+    yii migrate --migrationPath=@vendor/noumo/easyii/migrations/ --migrationTable=easyii_migration
+    

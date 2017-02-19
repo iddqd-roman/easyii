@@ -32,7 +32,7 @@ $settings = $this->context->module->settings;
 <?php endif; ?>
 
 <?php if(!empty($settings['categoryDescription'])) : ?>
-    <?= $form->field($model, 'description')->textarea(['rows' => 3]) ?>
+    <?= $form->field($model, 'description')->widget(\yii\easyii\widgets\Redactor::className()) ?>
 <?php endif; ?>
 
 <?php if(!empty($settings['categoryThumb'])) : ?>
