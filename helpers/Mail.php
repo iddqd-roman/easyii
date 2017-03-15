@@ -45,6 +45,9 @@ class Mail
         if(!empty($options['replyTo']) && filter_var($options['replyTo'], FILTER_VALIDATE_EMAIL)){
             $message->setReplyTo($options['replyTo']);
         }
+        if(!empty($options['cc']) && filter_var($options['cc'], FILTER_VALIDATE_EMAIL)){
+            $message->setCc($options['cc']);
+        }
 
         return $message->send();
     }
