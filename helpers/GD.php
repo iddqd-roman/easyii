@@ -83,6 +83,78 @@ class GD
         $this->_image = $resizedImage;
     }
 
+    public function resizeAndFill($width = null, $height = null)
+    {
+        if(!$this->_image || (!$width && !$height)){
+            return false;
+        }
+
+        if(!$width)
+        {
+            if ($this->_height > $height) {
+                $ratio = $this->_height / $height;
+                $newWidth = round($this->_width / $ratio);
+                $newHeight = $height;
+            } else {
+                $newWidth = $this->_width;
+                $newHeight = $this->_height;
+            }
+        }
+        elseif(!$height)
+        {
+            if ($this->_width > $width) {
+                $ratio = $this->_width / $width;
+                $newWidth = $width;
+                $newHeight = round($this->_height / $ratio);
+            } else {
+                $newWidth = $this->_width;
+                $newHeight = $this->_height;
+            }
+        }
+        else
+        {
+            $newWidth = $width;
+            $newHeight = $height;
+        }
+
+        $source_aspect_ratio = $this->_width / $this->_height;
+        $thumbnail_aspect_ratio = $newWidth / $newHeight;
+        if ($this->_width <= $newWidth && $this->_height <= $newHeight) {
+            $thumbnail_image_width = $this->_width;
+            $thumbnail_image_height = $this->_height;
+        } elseif ($thumbnail_aspect_ratio > $source_aspect_ratio) {
+            $thumbnail_image_width = (int) ($newHeight * $source_aspect_ratio);
+            $thumbnail_image_height = $newHeight;
+        } else {
+            $thumbnail_image_width = $newWidth;
+            $thumbnail_image_height = (int) ($newWidth / $source_aspect_ratio);
+        }
+        //Сначала делаем превьюшку по большей стороне с сохранением отношения сторон
+        $thumbnail_gd_image = imagecreatetruecolor($thumbnail_image_width, $thumbnail_image_height);
+        imagecopyresampled($thumbnail_gd_image, $this->_image, 0, 0, 0, 0, $thumbnail_image_width, $thumbnail_image_height, $this->_width, $this->_height);
+
+        //Центруем изображение
+        if ($newWidth > $thumbnail_image_width){
+            $y = 0;
+            $x = ($newWidth - $thumbnail_image_width)/2;
+        }else{
+            $x = 0;
+            /*echo $newHeight;
+            echo '<br/>';
+            echo $thumbnail_image_height;*/
+            $y = ($newHeight - $thumbnail_image_height)/2;
+        }
+        //Заполняем оставшееся полотно прозрачным цветом
+        $resizedImage = imagecreatetruecolor($newWidth, $newHeight);
+        imagecopyresampled($resizedImage, $thumbnail_gd_image, $x, $y, 0, 0, $thumbnail_image_width, $thumbnail_image_width, $thumbnail_image_width, $thumbnail_image_width);
+        //Прозрачный фон
+        $transparency = imagecolorallocatealpha($resizedImage, 255, 255, 255, 127);//color: white with alpha
+        imagefill($resizedImage, 0, 0, $transparency);
+        imagesavealpha($resizedImage, true);
+
+        $this->_image = $resizedImage;
+    }
+
     public function cropThumbnail($width, $height)
     {
         if(!$this->_image || !$width || !$height){
