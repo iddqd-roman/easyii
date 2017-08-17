@@ -4,6 +4,7 @@ return [
     'Article' => 'Статья',
 
     'Short' => 'Короткий текст',
+    'Source' => 'Источник',
 
     'Create article' => 'Создать статью',
     'Edit article' => 'Редактировать статью',

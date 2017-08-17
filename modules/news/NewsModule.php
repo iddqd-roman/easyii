@@ -7,6 +7,7 @@ class NewsModule extends \yii\easyii\components\Module
         'enableThumb' => true,
         'enablePhotos' => true,
         'enableShort' => true,
+        'enableSource' => true,
         'shortMaxLength' => 256,
         'enableTags' => true,
         'slugImmutable' => false

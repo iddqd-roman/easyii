@@ -25,7 +25,7 @@ class Item extends \yii\easyii\components\ActiveRecord
     {
         return [
             [['text', 'title'], 'required'],
-            [['title', 'short', 'text'], 'trim'],
+            [['title', 'short', 'source', 'text'], 'trim'],
             ['title', 'string', 'max' => 128],
             ['image_file', 'image'],
             [['category_id', 'views', 'time', 'status'], 'integer'],
@@ -44,6 +44,7 @@ class Item extends \yii\easyii\components\ActiveRecord
             'category_id' => Yii::t('easyii', 'Category'),
             'text' => Yii::t('easyii', 'Text'),
             'short' => Yii::t('easyii/article', 'Short'),
+            'source' => Yii::t('easyii/article', 'Source'),
             'image_file' => Yii::t('easyii', 'Image'),
             'time' => Yii::t('easyii', 'Date'),
             'slug' => Yii::t('easyii', 'Slug'),

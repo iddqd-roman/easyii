@@ -12,6 +12,7 @@ class ArticleModule extends \yii\easyii\components\Module
         'enablePhotos' => true,
         'enableTags' => true,
         'enableShort' => true,
+        'enableSource' => true,
         'shortMaxLength' => 255,
 
         'itemsInFolder' => false,

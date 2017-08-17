@@ -17,6 +17,7 @@ use yii\helpers\StringHelper;
  * @property string $text
  * @property string $image_file
  * @property string $slug
+ * @property string $source
  * @property integer $time
  * @property integer $views
  * @property integer $status
@@ -38,7 +39,7 @@ class News extends \yii\easyii\components\ActiveRecord
     {
         return [
             [['text', 'title'], 'required'],
-            [['title', 'short', 'text'], 'trim'],
+            [['title', 'short', 'source', 'text'], 'trim'],
             ['title', 'string', 'max' => 128],
             ['image_file', 'image'],
             [['views', 'time', 'status'], 'integer'],
@@ -56,6 +57,7 @@ class News extends \yii\easyii\components\ActiveRecord
             'title' => Yii::t('easyii', 'Title'),
             'text' => Yii::t('easyii', 'Text'),
             'short' => Yii::t('easyii/news', 'Short'),
+            'source' => Yii::t('easyii/news', 'Source'),
             'image_file' => Yii::t('easyii', 'Image'),
             'time' => Yii::t('easyii', 'Date'),
             'slug' => Yii::t('easyii', 'Slug'),

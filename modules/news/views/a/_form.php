@@ -24,6 +24,9 @@ $module = $this->context->module->id;
 <?php if($this->context->module->settings['enableShort']) : ?>
     <?= $form->field($model, 'short')->textarea() ?>
 <?php endif; ?>
+<?php if($this->context->module->settings['enableSource']) : ?>
+    <?= $form->field($model, 'source')->textInput() ?>
+<?php endif; ?>
 
 <?= $form->field($model, 'text')->widget(\yii\easyii\widgets\Redactor::className()) ?>
 <?= $form->field($model, 'time')->widget(DateTimePicker::className()); ?>

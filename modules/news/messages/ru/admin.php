@@ -7,4 +7,5 @@ return [
     'News updated' => 'Новость обновлена',
     'News deleted' => 'Новость удалена',
     'Short' => 'Коротко',
+    'Source' => 'Источник',
 ];

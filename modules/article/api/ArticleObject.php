@@ -12,6 +12,9 @@ class ArticleObject extends \yii\easyii\components\ApiObject
     /** @var  string */
     public $slug;
 
+    /** @var  string */
+    public $source;
+
     public $image;
 
     public $views;
