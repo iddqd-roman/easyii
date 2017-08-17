@@ -53,4 +53,17 @@ class NewsObject extends \yii\easyii\components\ApiObject
     public function  getEditLink(){
         return Url::to(['/admin/news/a/edit/', 'id' => $this->id]);
     }
+
+    /**
+     * Return max length chars from source
+     * If $length == 0, return without truncate
+     * @param int $length
+     * @return bool|string
+     */
+    public function getSource($length = 0){
+        if ($length){
+            return substr($this->source, 0, $length);
+        }
+        return $this->source;
+    }
 }
