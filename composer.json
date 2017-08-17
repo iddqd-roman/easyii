@@ -33,7 +33,8 @@
         "stojg/crop": "*",
         "google/apiclient": "1.0.*@beta",
         "bower-asset/animate.css": "*",
-        "bower-asset/wowjs": "*"
+        "bower-asset/wowjs": "*",
+        "himiklab/yii2-sitemap-module" : "*"
     },
     "autoload": {
         "psr-4": {
