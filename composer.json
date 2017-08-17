@@ -31,7 +31,9 @@
         "2amigos/yii2-selectize-widget": "~1.0",
         "vova07/yii2-imperavi-widget": "*",
         "stojg/crop": "*",
-        "google/apiclient": "1.0.*@beta"
+        "google/apiclient": "1.0.*@beta",
+        "bower-asset/animate.css": "*",
+        "bower-asset/wowjs": "*"
     },
     "autoload": {
         "psr-4": {
