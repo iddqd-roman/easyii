@@ -4,6 +4,7 @@ namespace yii\easyii\modules\guestbook\models;
 use Yii;
 use yii\easyii\behaviors\CalculateNotice;
 use yii\easyii\helpers\Mail;
+use yii\easyii\helpers\Telegram;
 use yii\easyii\models\Setting;
 use yii\easyii\modules\guestbook\GuestbookModule;
 use yii\easyii\validators\ReCaptchaValidator;
@@ -58,6 +59,7 @@ class Guestbook extends \yii\easyii\components\ActiveRecord
 
         if($insert){
             $this->mailAdmin();
+            $this->telegramAdmin();
         }
     }
 
@@ -98,6 +100,19 @@ class Guestbook extends \yii\easyii\components\ActiveRecord
                 'post' => $this,
                 'link' => Url::to(['/admin/guestbook/a/view', 'id' => $this->primaryKey], true)
             ]
+        );
+    }
+
+    public function telegramAdmin()
+    {
+        if(!GuestbookModule::setting('telegramAdminOnNewPost')){
+            return false;
+        }
+        return Telegram::send(
+            Setting::get('telegram_bot_token'),
+            Setting::get('telegram_chat_id'),
+            GuestbookModule::setting('telegramTemplateOnNewPost'),
+            ['post' => $this, 'link' => Url::to(['/admin/guestbook/a/view', 'id' => $this->primaryKey], true)]
         );
     }
 

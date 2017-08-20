@@ -11,6 +11,8 @@ class GuestbookModule extends \yii\easyii\components\Module
         'mailAdminOnNewPost' => true,
         'subjectOnNewPost' => 'New message in the guestbook.',
         'templateOnNewPost' => '@easyii/modules/guestbook/mail/en/new_post',
+        'telegramAdminOnNewPost' => false,
+        'telegramTemplateOnNewPost' => '@easyii/modules/guestbook/telegram/en/new_post',
         'frontendGuestbookRoute' => '/guestbook',
         'subjectNotifyUser' => 'Your post in the guestbook answered',
         'templateNotifyUser' => '@easyii/modules/guestbook/mail/en/notify_user'
