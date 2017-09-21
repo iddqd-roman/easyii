@@ -23,7 +23,22 @@ $module = $this->context->module->id;
         <?php foreach($category->items as $item) : ?>
             <tr data-id="<?= $item->primaryKey ?>">
                 <td><?= $item->primaryKey ?></td>
-                <td><a href="<?= Url::to(['/admin/'.$module.'/items/edit', 'id' => $item->primaryKey]) ?>"><?= $item->title ?></a></td>
+                <td>
+                    <a href="<?= Url::to(['/admin/'.$module.'/items/edit', 'id' => $item->primaryKey]) ?>">
+                        <?php if(isset($item->data->width)
+                                && isset($item->data->height)
+                                && isset($item->data->diameter)){ ?>
+                        
+                        <?= $item->data->width; ?>/<?= $item->data->width; ?>R<?= $item->data->diameter; ?>
+                        <?= $item->data->brand; ?> <?= $item->title; ?>
+                        
+                        <?php }else{ ?>
+                            
+                        <?= $item->title; ?>
+                        
+                        <?php } ?>
+                    </a>
+                </td>
                 <td class="status">
                     <?= Html::checkbox('', $item->status == Item::STATUS_ON, [
                         'class' => 'switch',
