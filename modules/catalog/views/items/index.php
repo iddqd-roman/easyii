@@ -25,18 +25,11 @@ $module = $this->context->module->id;
                 <td><?= $item->primaryKey ?></td>
                 <td>
                     <a href="<?= Url::to(['/admin/'.$module.'/items/edit', 'id' => $item->primaryKey]) ?>">
-                        <?php if(isset($item->data->width)
-                                && isset($item->data->height)
-                                && isset($item->data->diameter)){ ?>
-                        
-                        <?= $item->data->width; ?>/<?= $item->data->width; ?>R<?= $item->data->diameter; ?>
-                        <?= $item->data->brand; ?> <?= $item->title; ?>
-                        
-                        <?php }else{ ?>
-                            
+                        <?php if(isset($item->data->width, $item->data->height, $item->data->diameter, $item->data->brand)): ?>
+                            <?= $item->data->width; ?>/<?= $item->data->width; ?>R<?= $item->data->diameter; ?>
+                            <?= $item->data->brand; ?>
+                        <?php endif; ?>
                         <?= $item->title; ?>
-                        
-                        <?php } ?>
                     </a>
                 </td>
                 <td class="status">
