@@ -13,6 +13,9 @@ use yii\easyii\modules\catalog\models\Category;
 use yii\easyii\modules\catalog\models\Item;
 use yii\widgets\ActiveForm;
 
+use yii\easyii\actions\CopyAction;
+
+
 class ItemsController extends Controller
 {
     public $modelClass = 'yii\easyii\modules\catalog\models\Item';
@@ -38,6 +41,13 @@ class ItemsController extends Controller
             ],
             'on' => ChangeStatusAction::className(),
             'off' => ChangeStatusAction::className(),
+            
+            /* ADDED BY ROMAN DEVELOPER */
+            'copy' => [
+                'class' => CopyAction::className(),
+                'successMessage' => Yii::t('easyii/catalog', 'Элемент скопирован')
+            ],
+            /* /ADDED BY ROMAN DEVELOPER */
         ];
     }
 
@@ -91,7 +101,7 @@ class ItemsController extends Controller
             ]);
         }
     }
-
+    
     public function actionEdit($id)
     {
         $model = $this->findModel($id);
