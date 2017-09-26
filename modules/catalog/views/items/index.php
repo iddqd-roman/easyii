@@ -3,6 +3,9 @@ use yii\easyii\modules\catalog\models\Item;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
+use app\helpers\CatalogHelper;
+
+
 $this->title = Yii::t('easyii/catalog', 'Catalog');
 
 $module = $this->context->module->id;
@@ -26,8 +29,7 @@ $module = $this->context->module->id;
                 <td>
                     <a href="<?= Url::to(['/admin/'.$module.'/items/edit', 'id' => $item->primaryKey]) ?>">
                         <?php if(isset($item->data->width, $item->data->height, $item->data->diameter, $item->data->brand)): ?>
-                            <?= app\helpers\CatalogHelper::getItemTitle(
-                                    yii\easyii\modules\catalog\api\Catalog::get($item->id));?>
+                            <?= CatalogHelper::getItemTitle($item);?>
                         <?php else: ?>
                         <?= $item->title; ?>
                         <?php endif; ?>
