@@ -184,6 +184,13 @@ class InstallController extends \yii\web\Controller
         ])->execute();
 
         $db->createCommand()->insert(Setting::tableName(), [
+            'name' => 'metrika',
+            'value' => $installForm->metrika,
+            'title' => Yii::t('easyii/install', 'Yandex.Metrika counter'),
+            'visibility' => Setting::VISIBLE_ROOT
+        ])->execute();
+
+        $db->createCommand()->insert(Setting::tableName(), [
             'name' => 'recaptcha_secret',
             'value' => $installForm->recaptcha_secret,
             'title' => Yii::t('easyii/install', 'ReCaptcha secret'),
