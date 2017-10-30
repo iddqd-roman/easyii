@@ -15,7 +15,8 @@ class Redactor extends \vova07\imperavi\Widget
             'fileUpload' => Url::to(['/admin/redactor/file-upload']),
             'imageManagerJson' => Url::to(['/admin/redactor/images-get']),
             'fileManagerJson' => Url::to(['/admin/redactor/files-get']),
-            'plugins' => Setting::getAsArray('redactor_plugins')
+            'plugins' => Setting::getAsArray('redactor_plugins'),
+            'replaceDivs' => false,
         ];
         if(Yii::$app->language !== 'en-US') {
             if(Yii::$app->language === 'zh-CN'){
