@@ -14,7 +14,7 @@ use yii\easyii\modules\catalog\models\Item;
 use yii\widgets\ActiveForm;
 
 use yii\easyii\actions\CopyAction;
-
+use yii\helpers\ArrayHelper;
 
 class ItemsController extends Controller
 {
@@ -60,10 +60,86 @@ class ItemsController extends Controller
 
     public function actionIndex($id)
     {
+        $request = Yii::$app->request;
+        Yii::$app->session->set('memory_page', $request->url);
+        
+        $category = $this->findCategory($id);
+        $items = $category->items;
+        
+        $memory_sort = $request->cookies->getValue('catalog_items_sort');
+        $sort = ['id', 'ASC'];
+        if($memory_sort){
+            $sort = explode(',', $memory_sort);
+            if((new Item())->hasAttribute($sort[0]) || $sort[0] == 'fulltitle'){
+                ArrayHelper::multisort($items, $sort[0], (int)$sort[1]);
+            }
+        }
         return $this->render('index', [
-            'category' => $this->findCategory($id)
+            'category' => $category,
+            'items' => $items,
+            'sort' => $sort,
         ]);
     }
+    
+    
+    /**
+     * Устанавливает способ сортировки товаров в админке и редиректит
+     * на предыдущую страницу или на начальную
+     * 
+     * @param string $field Поле, по которому сортировать
+     * @param int $direction Направление сортировки
+     * @return \yii\web\Response
+     */
+    public function actionSort($field = 'id', $direction = SORT_ASC){
+        if($direction != SORT_ASC && $direction != SORT_DESC){
+            $direction = SORT_ASC;
+        }
+        $cookies = Yii::$app->response->cookies;
+        $cookies->add(new \yii\web\Cookie([
+            'name' => 'catalog_items_sort',
+            'value' => $field . ',' . $direction,
+        ]));
+        $url = Yii::$app->request->referrer;
+        if(!$url){
+            $session = Yii::$app->session;
+            $session_key = 'memory_page';
+            $url = $session->get($session_key);
+            if(!$url){
+                return $this->goBack();
+            }
+            $session->remove($session_key);
+        }
+        return $this->redirect($url);
+    }
+    
+    
+    public function actionCatalogField(){
+        $post = Yii::$app->request->post();
+        if(!Yii::$app->request->isAjax){
+            return null;
+        }
+        if($post['type'] === 'categories'){
+            $query = Category::find()->orderBy(['id' => SORT_ASC]);
+            $view_name = '_catalogs_modal_grid';
+        }
+        elseif($post['type'] === 'items'){
+            $query = Item::find()->where(['category_id' => $post['category_id']])->orderBy(['id' => SORT_ASC]);
+            $view_name = '_items_modal_grid';
+        }
+        else{
+            return null;
+        }
+        return $this->renderPartial($view_name, [
+            'data_provider' => new \yii\data\ActiveDataProvider([
+                'query' => $query,
+                'sort' => false,
+                'pagination' => [
+                    'pageSize' => 0
+                ]
+            ])
+        ]);
+    }
+    
 
     public function actionCreate($id)
     {

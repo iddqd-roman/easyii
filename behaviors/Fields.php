@@ -85,6 +85,33 @@ class Fields extends Behavior
                 ]);
                 $result .= '</div>';
             }
+            //Если тип поля == CATALOG, отрисовываем кнопку и всплывашку
+            elseif($field->type === CategoryWithFieldsModel::FIELD_TYPE_CATALOG){
+                $view_path = dirname(dirname(__FILE__)) .'/modules/catalog/views/items/_catalog_modal.php';
+                $result .= '<div class="form-group catalog-field"><label>'. $field->title .'</label>';
+                $result .= '<br>' . Html::button('Выбрать', [
+                    'class' => 'btn btn-success catalog-choose',
+                    'data-toggle' => 'modal',
+                    'data-target' => '#modal-' . $field->name,
+                ]);
+                $result .= \Yii::$app->view->renderFile($view_path, [
+                    'id' => $field->name,
+                    'title' => $field->title,
+                ]);
+                $result .= '</div>';
+                $result .= '<div id="catalog-field-'.$field->name.'">';
+                if(is_array($value)){
+                    $items = \yii\easyii\modules\catalog\models\Item::find()->where(['in', 'id', $value])->all();
+                    foreach($items as $item){
+                        $result .= '<div class="alert alert-info fade in chosen-item" data-id="'.$item->id.'">
+                            <a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a>'
+                            .$item->fullTitle
+                            .'<input type="hidden" name="Data['.$field->name.'][]" value="'.$item->id.'">
+                            </div>';
+                    }
+                }
+                $result .= '</div>';
+            }
         }
         return $result;
     }

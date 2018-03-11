@@ -19,6 +19,7 @@ class CategoryWithFieldsModel extends CategoryModel
     const FIELD_TYPE_FILE = 'file';
     const FIELD_TYPE_DATE = 'date';
     const FIELD_TYPE_ADDRESS = 'address';
+    const FIELD_TYPE_CATALOG = 'catalog';
     
     public static $FIELD_TYPES = [
         self::FIELD_TYPE_STRING => 'String',
@@ -29,7 +30,8 @@ class CategoryWithFieldsModel extends CategoryModel
         self::FIELD_TYPE_CHECKBOX => 'Checkbox',
         self::FIELD_TYPE_FILE => 'File',
         self::FIELD_TYPE_DATE => 'Date',
-        self::FIELD_TYPE_ADDRESS => 'Address'
+        self::FIELD_TYPE_ADDRESS => 'Address',
+        self::FIELD_TYPE_CATALOG => 'Catalog'
     ];
 
     public static $FIELDS_WITH_OPTIONS = [

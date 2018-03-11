@@ -3,36 +3,41 @@ use yii\easyii\modules\catalog\models\Item;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
-use app\helpers\CatalogHelper;
-
-
 $this->title = Yii::t('easyii/catalog', 'Catalog');
 
 $module = $this->context->module->id;
 ?>
 <?= $this->render('_menu', ['category' => $category]) ?>
 
-<?php if(count($category->items)) : ?>
+<?php if(count($items)) : ?>
     <table class="table table-hover">
         <thead>
         <tr>
-            <th width="50">#</th>
-            <th><?= Yii::t('easyii', 'Name') ?></th>
+            <th width="50">
+                <?=Html::a('#', [
+                    '/admin/'.$module.'/items/sort',
+                    'field' => 'id',
+                    'direction' => ($sort[0] == 'id' && $sort[1] == SORT_ASC ? SORT_DESC : SORT_ASC)
+                ]);?>
+            </th>
+            <th>
+                <?=Html::a(Yii::t('easyii', 'Name'), [
+                    '/admin/'.$module.'/items/sort',
+                    'field' => 'fulltitle',
+                    'direction' => ($sort[0] == 'fulltitle' && $sort[1] == SORT_ASC ? SORT_DESC : SORT_ASC)
+                ]);?>
+            </th>
             <th width="100"><?= Yii::t('easyii', 'Status') ?></th>
             <th width="160"></th>
         </tr>
         </thead>
         <tbody>
-        <?php foreach($category->items as $item) : ?>
+        <?php foreach($items as $item) : ?>
             <tr data-id="<?= $item->primaryKey ?>">
                 <td><?= $item->primaryKey ?></td>
                 <td>
                     <a href="<?= Url::to(['/admin/'.$module.'/items/edit', 'id' => $item->primaryKey]) ?>">
-                        <?php if(isset($item->data->width, $item->data->height, $item->data->diameter, $item->data->brand)): ?>
-                            <?= CatalogHelper::getItemTitle($item);?>
-                        <?php else: ?>
-                        <?= $item->title; ?>
-                        <?php endif; ?>
+                        <?=$item->fulltitle; ?>
                     </a>
                 </td>
                 <td class="status">

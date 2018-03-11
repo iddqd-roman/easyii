@@ -13,7 +13,9 @@ class Item extends \yii\easyii\components\ActiveRecord
 {
     const STATUS_OFF = 0;
     const STATUS_ON = 1;
-
+    
+    private $_full_title;
+    
     public static function tableName()
     {
         return 'easyii_catalog_items';
@@ -116,5 +118,57 @@ class Item extends \yii\easyii\components\ActiveRecord
 
         ItemData::deleteAll(['item_id' => $this->primaryKey]);
     }
+    
+    
+    public function getFullTitle($middle_separator = '')
+    {
+        if($this->_full_title === null){
+            if(!isset($this->data->width, $this->data->height, $this->data->diameter, $this->data->brand)){
+                return $this->title;
+            }
+            //ЕСЛИ ДИСКИ
+            $cat_slug = Category::findOne($this->category_id)->slug;
+            if($cat_slug == 'wheels'){
+                $brand = isset($this->data->brand) ? $this->data->brand : '';
+                $width = isset($this->data->width) ? $this->data->width : '';
+                $diameter = isset($this->data->diameter) ? $this->data->diameter : '';
+                $fixture = isset($this->data->fixture) ? $this->data->fixture : '';
+                $pcd = isset($this->data->pcd) ? $this->data->pcd : '';
+                $dia = isset($this->data->dia) ? $this->data->dia : '';
+                $et = isset($this->data->et) ? $this->data->et : '';
 
+                $param_1 = implode('x', [$width, $diameter]);
+                $param_2 = implode('/', [$param_1, $fixture . 'x' . $pcd, $dia, $et]);
+                $middle_separator = ($middle_separator == '') ? ' ' : $middle_separator;
+
+                return $brand . $middle_separator . $param_2;
+            }
+            else{
+                //ЕСЛИ ШИНЫ
+                $width = isset($this->data->width) ? $this->data->width : '';
+                $height = isset($this->data->height) ? $this->data->height : '';
+                $diameter = isset($this->data->diameter) ? $this->data->diameter : '';
+                $brand = isset($this->data->brand) ? $this->data->brand : '';
+                $title = $this->title;
+
+                $params = [];
+                if(!empty($width)){
+                    $params[] = $width;
+                }
+                if(!empty($height)){
+                    $params[] = $height;
+                }
+                $three_params = implode('/', $params);
+                $three_params .= $diameter ? 'R' . $diameter : '';
+                $three_params .= $middle_separator;
+
+                $this->_full_title = implode(' ', [
+                    $three_params,
+                    $brand,
+                    $title,
+                ]);
+            }
+        }
+        return $this->_full_title;
+    }
 }
