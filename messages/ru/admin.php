@@ -148,6 +148,8 @@ return [
     'Countries' => 'Страны',
     'Sources' => 'Источники',
     'chart is loading' => 'график загружается',
-    'Show on map' => 'На карте'
-
+    'Show on map' => 'На карте',
+    'Export category' => 'Экспортировать категорию',
+    'Category successfully exported' => 'Категория экспортирована',
+    'Failed to export category' => 'Не удалось экспортировать категорию',
 ];

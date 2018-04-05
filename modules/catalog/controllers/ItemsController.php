@@ -113,6 +113,46 @@ class ItemsController extends Controller
     }
     
     
+    public function actionExport($id){
+        $category = Category::findOne(['id' => $id]);
+        if(is_object($category)){
+            $items = $category->items;
+            $memory_sort = Yii::$app->request->cookies->getValue('catalog_items_sort');
+            $sort = ['id', 'ASC'];
+            if($memory_sort){
+                $sort = explode(',', $memory_sort);
+                if((new Item())->hasAttribute($sort[0]) || $sort[0] == 'fulltitle'){
+                    ArrayHelper::multisort($items, $sort[0], (int)$sort[1]);
+                }
+            }
+            return \moonland\phpexcel\Excel::export([
+                'models' => $items,
+                'columns' => [
+                    'id',
+                    [
+                        'header' => 'Название',
+                        'value' => function($model){
+                            return $model->fullTitle;
+                        }
+                    ],
+                    'price',
+                    'available',
+                ],
+                'headers' => [
+                    'id' => '№',
+                    'fulltitle' => 'Название',
+                    'price' => 'Цена',
+                    'available' => 'Доступно'
+                ],
+            ]);
+        }
+        else{
+            $this->flash('error', Yii::t('easyii', 'Failed to export category'));
+        }
+        return $this->redirect(['/admin/'.$this->module->id.'/items/'.$id]);
+    }
+    
+    
     public function actionCatalogField(){
         $post = Yii::$app->request->post();
         if(!Yii::$app->request->isAjax){

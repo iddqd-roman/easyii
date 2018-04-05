@@ -10,5 +10,8 @@ $module = $this->context->module->id;
     <?php endif; ?>
     <li <?= ($action === 'index') ? 'class="active"' : '' ?>><a href="<?= Url::to(['/admin/'.$module.'/items', 'id' => $category->primaryKey]) ?>"><?php if($action !== 'index') echo '<i class="glyphicon glyphicon-chevron-left font-12"></i> ' ?><?= $category->title ?></a></li>
     <li <?= ($action === 'create') ? 'class="active"' : '' ?>><a href="<?= Url::to(['/admin/'.$module.'/items/create', 'id' => $category->primaryKey]) ?>"><?= Yii::t('easyii', 'Add') ?></a></li>
+    <?php if($action === 'index') : ?>
+        <li><a href="<?= Url::to(['/admin/'.$module.'/items/export', 'id' => $category->primaryKey]) ?>"> <?= Yii::t('easyii', 'Export category') ?></a></li>
+    <?php endif; ?>
 </ul>
 <br/>
